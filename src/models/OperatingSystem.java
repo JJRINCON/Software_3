@@ -43,10 +43,8 @@ public class OperatingSystem {
 	}
 
 	public boolean addProcess(MyProcess myProcess) {
-		boolean[] states = new boolean[] { myProcess.isLocked(), myProcess.isSuspended_Locked(),
-											myProcess.isSuspended_Ready() };
 		if (search(myProcess.getName()) == null) {
-			readyAndDespachado.add(new MyProcess(myProcess.getName(), myProcess.getTime(), states));
+			processQueueReady.push(myProcess);
 			addProcess(readyAndDespachado,myProcess, false);
 			return true;
 		}
@@ -161,21 +159,55 @@ public class OperatingSystem {
 					addProcess(suspendedLockedToSuspendedReady, process, false);
 					addProcess(suspendedReady, process, false);
 					addProcess(suspendedReadyToReady, process, false);
+					addToQueue(process);
 				}else {
 					addProcess(suspendedLockedToLocked, process, false);
 					addProcess(locked, process, false);
 					addProcess(lockedToReady, process, false);
+					addToQueue(process);
 				}
-			}else {
+			}else if(process.isSuspended_Ready()){
+				addProcess(lockedToSuspendedLocked, process, false);
+				addProcess(suspendedLocked, process, false);
+				addProcess(suspendedLockedToSuspendedReady, process, false);
+				addProcess(suspendedReady, process, false);
+				addProcess(suspendedReadyToReady, process, false);
+				addToQueue(process);
+			}else{
 				addProcess(lockedToReady, process, false);
+				addToQueue(process);
+			}
+		}else if (process.isSuspended_Locked()) {
+			addProcess(toLocked, process, false);
+			addProcess(locked,process,false);
+			addProcess(lockedToSuspendedLocked, process, false);
+			addProcess(suspendedLocked, process, false);
+			if(process.isSuspended_Ready()) {
+				addProcess(suspendedLockedToSuspendedReady, process, false);
+				addProcess(suspendedReady, process, false);
+				addProcess(suspendedReadyToReady, process, false);
+				addToQueue(process);
+			}else {
+				addProcess(suspendedLockedToLocked, process, false);
+				addProcess(locked, process, false);
+				addProcess(lockedToReady, process, false);
+				addToQueue(process);
 			}
 		}else if(process.isSuspended_Ready()) {
 			addProcess(toSuspendedReady, process, false);
 			addProcess(suspendedReady, process, false);
 			addProcess(suspendedReadyToReady, process, false);
+			addToQueue(process);
 		}else {
 			addProcess(expired, process, false);
+			addToQueue(process);
 		}
+	}
+
+	private void addToQueue(MyProcess process ) {
+		addProcess(readyAndDespachado, process, false);
+		MyProcess myProcess= processQueueReady.pop();
+		processQueueReady.push(myProcess);
 	}
 
 	
@@ -400,5 +432,21 @@ public class OperatingSystem {
 			processInfo[i][2] = processes.get(i).isLocked();
 		}
 		return processInfo;
+	}
+	
+	public static void main(String[] args) {
+		OperatingSystem operatingSystem = new OperatingSystem();
+		operatingSystem.addProcess(new MyProcess("P1", 25, new boolean[] {true, true, true} ));
+		operatingSystem.addProcess(new MyProcess("P2", 15, new boolean[] {false, true, false} ));
+		operatingSystem.addProcess(new MyProcess("P3", 21, new boolean[] {false, false, true} ));
+		operatingSystem.addProcess(new MyProcess("P4", 13, new boolean[] {true, false, false} ));
+		operatingSystem.addProcess(new MyProcess("P5", 22, new boolean[] {true, true, false} ));
+		operatingSystem.addProcess(new MyProcess("P6", 10, new boolean[] {false, true, true} ));
+		operatingSystem.addProcess(new MyProcess("P7", 15, new boolean[] {true, false, true} ));
+		operatingSystem.addProcess(new MyProcess("P8", 25, new boolean[] {false, false, false} ));
+		
+		operatingSystem.startSimulation();
+		
+		operatingSystem.show();
 	}
 }

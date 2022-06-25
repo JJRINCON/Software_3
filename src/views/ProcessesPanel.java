@@ -65,7 +65,6 @@ public class ProcessesPanel extends MyGridPanel {
     }
 
     private void verifyRowsNumber(Queue<MyProcess> processQueue){
-        System.out.println(processQueue.size());
         if(processQueue.size() < 10){
             processes = new JPanel(new GridLayout(10, 1, 5, 5));
             processes.setBackground(Color.decode("#FDFEFE"));

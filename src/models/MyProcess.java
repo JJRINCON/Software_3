@@ -59,4 +59,8 @@ public class MyProcess {
 		this.isSuspended_Ready = isSuspended_Ready;
 	}
 
+	@Override
+	public String toString() {
+		return name+" "+time+ " "+ locked +" " + isSuspended_Locked + " " + isSuspended_Ready;
+	}
 }
