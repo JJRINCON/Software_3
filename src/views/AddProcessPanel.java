@@ -1,5 +1,7 @@
 package views;
 
+import exceptions.EmptyProcessNameException;
+import exceptions.EmptyProcessTimeException;
 import presenters.Events;
 
 import javax.swing.*;
@@ -118,27 +120,29 @@ public class AddProcessPanel extends MyGridPanel{
         return btn;
     }
 
-    public String getProcessName() throws Exception {
+    public String getProcessName() throws EmptyProcessNameException {
         if(!processNameTxt.getText().isEmpty()){
             return processNameTxt.getText();
         }else{
-            throw new Exception("El proceso debe tener un nombre");
+            throw new EmptyProcessNameException();
         }
     }
 
-    public int getProcessTime() throws Exception, NumberFormatException {
+    public int getProcessTime() throws EmptyProcessTimeException, NumberFormatException {
         String text = processTimeTxt.getText();
         if(!text.isEmpty()){
             return Integer.parseInt(text);
         }else{
-            throw new Exception("El proceso debe tener un tiempo");
+            throw new EmptyProcessTimeException();
         }
     }
 
-    public void setInitialInfo(String name, String time, boolean isLocked){
+    public void setInitialInfo(String name, String time, boolean ... states){
         processNameTxt.setText(name);
         processTimeTxt.setText(time);
-        isBlockedCb.setSelected(isLocked);
+        isBlockedCb.setSelected(states[0]);
+        isSuspendedReadyCb.setSelected(states[1]);
+        isSuspendedBlockedCb.setSelected(states[2]);
         addBtn.setName(name);
     }
 

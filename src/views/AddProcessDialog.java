@@ -1,6 +1,9 @@
 package views;
 
 
+import exceptions.EmptyProcessNameException;
+import exceptions.EmptyProcessTimeException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -20,11 +23,11 @@ public class AddProcessDialog extends JDialog {
         setLocationRelativeTo(null);
     }
 
-    public String getProcessName() throws Exception {
+    public String getProcessName() throws EmptyProcessNameException {
         return addProcessPanel.getProcessName();
     }
 
-    public int getProcessTime() throws Exception, NumberFormatException{
+    public int getProcessTime() throws EmptyProcessTimeException, NumberFormatException{
         return addProcessPanel.getProcessTime();
     }
 
@@ -40,7 +43,7 @@ public class AddProcessDialog extends JDialog {
         return addProcessPanel.getIsSuspendedBlocked();
     }
 
-    public void setInitialInfo(String name, String time, boolean isLocked){
-        addProcessPanel.setInitialInfo(name, time, isLocked);
+    public void setInitialInfo(String name, String time, boolean ... states){
+        addProcessPanel.setInitialInfo(name, time, states);
     }
 }

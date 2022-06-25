@@ -1,17 +1,20 @@
 package views;
 
+import models.MyProcess;
+import models.Queue;
 import presenters.Events;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainPanel extends MyGridPanel {
 
     public static final String EXIT_BTN_TXT = "Salir";
     public static final String START_SIMULATION_BTN_TXT = "Iniciar Simulacion";
     private ProcessesPanel processesPanel;
-    //private ReportsPanel reportsPanel;
+    private ReportsPanel reportsPanel;
     private MyGridPanel startSimulationPanel;
     private ActionListener listener;
 
@@ -33,7 +36,7 @@ public class MainPanel extends MyGridPanel {
     }
 
     public void initStartSimulationPanel(){
-        //hideReportsPanel();
+        hideReportsPanel();
         startSimulationPanel = new MyGridPanel();
         JButton startSimulationBtn = createBtn(START_SIMULATION_BTN_TXT, Color.decode("#2980B9"),
                                                 listener, Events.INIT_SIMULATION.toString());
@@ -44,7 +47,7 @@ public class MainPanel extends MyGridPanel {
         addComponent(startSimulationPanel, 2, 1, 9, 1);
         updateUI();
     }
-    /*
+
     private void hideReportsPanel(){
         if(reportsPanel != null){
             this.remove(reportsPanel);
@@ -53,17 +56,23 @@ public class MainPanel extends MyGridPanel {
 
     public void initReportsPanel(ArrayList<MyProcess> readyProcess, ArrayList<MyProcess> dispatchedProcess,
                                  ArrayList<MyProcess> executingProcess, ArrayList<MyProcess> toLockedProcess,
-                                 ArrayList<MyProcess> lockedProcess, ArrayList<MyProcess> wakeUpProcess,
-                                 ArrayList<MyProcess> expiredProcess, ArrayList<MyProcess> terminatedProcess){
+                                 ArrayList<MyProcess> lockedProcess, ArrayList<MyProcess> lockedToReady,
+                                 ArrayList<MyProcess> lockedToSuspendedLocked, ArrayList<MyProcess> suspendedLocked,
+                                 ArrayList<MyProcess> suspendedLockedToLocked, ArrayList<MyProcess> suspendedLockedToSuspendedReady,
+                                 ArrayList<MyProcess> toSuspendedReady, ArrayList<MyProcess> suspendedReady,
+                                 ArrayList<MyProcess> suspendedReadyToReady, ArrayList<MyProcess> expiredProcess,
+                                 ArrayList<MyProcess> terminatedProcess){
         this.remove(startSimulationPanel);
         this.remove(processesPanel);
         processesPanel.setBorder(BorderFactory.createMatteBorder(2, 2,2,0, Color.BLACK));
         addComponent(processesPanel, 0, 1, 3, 1);
         reportsPanel = new ReportsPanel(readyProcess, dispatchedProcess, executingProcess, toLockedProcess,
-                                        lockedProcess, wakeUpProcess, expiredProcess, terminatedProcess, listener);
+                                        lockedProcess, lockedToReady, lockedToSuspendedLocked, suspendedLocked,
+                                        suspendedLockedToLocked, suspendedLockedToSuspendedReady, toSuspendedReady,
+                                        suspendedReady, suspendedReadyToReady, expiredProcess, terminatedProcess, listener);
         addComponent(reportsPanel, 3,1,9,0.8);
         updateUI();
-    }*/
+    }
 
     private JButton createBtn(String txt, Color color, ActionListener listener, String command){
         JButton btn = new JButton(txt);
@@ -75,7 +84,7 @@ public class MainPanel extends MyGridPanel {
         return btn;
     }
 
-    /*public void updateProcesses(Queue<MyProcess> processQueue){
+    public void updateProcesses(Queue<MyProcess> processQueue){
         processesPanel.updateProcesses(processQueue);
-    }*/
+    }
 }

@@ -1,8 +1,12 @@
 package views;
 
+import models.MyProcess;
+import models.Queue;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
@@ -23,6 +27,24 @@ public class MainFrame extends JFrame {
     private void initProcessesPanel(){
         mainPanel = new MainPanel(listener);
         add(mainPanel);
+    }
+
+    public void initReportsPanel(ArrayList<MyProcess> readyProcess, ArrayList<MyProcess> dispatchedProcess,
+                                 ArrayList<MyProcess> executingProcess, ArrayList<MyProcess> toLockedProcess,
+                                 ArrayList<MyProcess> lockedProcess, ArrayList<MyProcess> lockedToReady,
+                                 ArrayList<MyProcess> lockedToSuspendedLocked, ArrayList<MyProcess> suspendedLocked,
+                                 ArrayList<MyProcess> suspendedLockedToLocked, ArrayList<MyProcess> suspendedLockedToSuspendedReady,
+                                 ArrayList<MyProcess> toSuspendedReady, ArrayList<MyProcess> suspendedReady,
+                                 ArrayList<MyProcess> suspendedReadyToReady, ArrayList<MyProcess> expiredProcess,
+                                 ArrayList<MyProcess> terminatedProcess){
+        mainPanel.initReportsPanel(readyProcess, dispatchedProcess, executingProcess, toLockedProcess,
+                lockedProcess, lockedToReady, lockedToSuspendedLocked, suspendedLocked,
+                suspendedLockedToLocked, suspendedLockedToSuspendedReady, toSuspendedReady,
+                suspendedReady, suspendedReadyToReady, expiredProcess, terminatedProcess);
+    }
+
+    public void updateProcesses(Queue<MyProcess> processQueue){
+        mainPanel.updateProcesses(processQueue);
     }
 
     public void newSimulation(){

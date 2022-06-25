@@ -1,5 +1,7 @@
 package models;
 
+import exceptions.RepeatedNameException;
+
 import java.util.ArrayList;
 
 
@@ -23,6 +25,7 @@ public class OperatingSystem {
 	
 
 	public OperatingSystem() {
+		this.processQueueReady = new Queue<>();
 		this.readyAndDespachado = new ArrayList<>();
 		this.executing = new ArrayList<>();
 		this.expired = new ArrayList<>();
@@ -40,9 +43,11 @@ public class OperatingSystem {
 	}
 
 	public boolean addProcess(MyProcess myProcess) {
+		boolean[] states = new boolean[] { myProcess.isLocked(), myProcess.isSuspended_Locked(),
+											myProcess.isSuspended_Ready() };
 		if (search(myProcess.getName()) == null) {
-			readyAndDespachado.add(new MyProcess(myProcess.getName(), myProcess.getTime(), myProcess.isLocked()));
-			addProcess( readyAndDespachado,myProcess, false);
+			readyAndDespachado.add(new MyProcess(myProcess.getName(), myProcess.getTime(), states));
+			addProcess(readyAndDespachado,myProcess, false);
 			return true;
 		}
 		return false;
@@ -193,11 +198,11 @@ public class OperatingSystem {
 		return processQueueReady;
 	}
 
-	public void verifyProcessName(String name) throws Exception {
+	public void verifyProcessName(String name) throws RepeatedNameException {
 		Node<MyProcess> temp = processQueueReady.peek();
 		while(temp != null){
 			if(temp.getData().getName().equals(name)){
-				throw new Exception("Nombre de proceso no disponible");
+				throw new RepeatedNameException(name);
 			}
 			temp = temp.getNext();
 		}
