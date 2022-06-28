@@ -3,6 +3,7 @@ package views;
 
 import exceptions.EmptyProcessNameException;
 import exceptions.EmptyProcessTimeException;
+import models.MyProcess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +44,8 @@ public class AddProcessDialog extends JDialog {
         return addProcessPanel.getIsSuspendedBlocked();
     }
 
-    public void setInitialInfo(String name, String time, boolean ... states){
-        addProcessPanel.setInitialInfo(name, time, states);
+    public void setInitialInfo(MyProcess process){
+        boolean[] states = {process.isLocked(), process.isSuspended_Locked(), process.isSuspended_Ready()};
+        addProcessPanel.setInitialInfo(process.getName(), String.valueOf((int)process.getTime()), states);
     }
 }

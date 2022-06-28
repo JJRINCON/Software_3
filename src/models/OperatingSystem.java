@@ -58,7 +58,7 @@ public class OperatingSystem {
 	 * @param time
 	 * @param lockedStatus
 	 */
-	public void editProcess(String actualName, String name, int time, boolean... states) {
+	public void editProcess(String actualName, String name, int time, boolean ... states) {
 		edit(search(actualName), name, time, states);
 		edit(searchInList(actualName, readyAndDespachado), name, time, states);
 	}
@@ -425,11 +425,13 @@ public class OperatingSystem {
 	}
 	
 	public static Object[][] processInfo(ArrayList<MyProcess> processes){
-		Object[][] processInfo = new Object[processes.size()][3];
+		Object[][] processInfo = new Object[processes.size()][5];
 		for (int i = 0; i < processes.size(); i++) {
 			processInfo[i][0] = processes.get(i).getName();
 			processInfo[i][1] = processes.get(i).getTime();
 			processInfo[i][2] = processes.get(i).isLocked();
+			processInfo[i][3] = processes.get(i).isSuspended_Locked();
+			processInfo[i][4] = processes.get(i).isSuspended_Ready();
 		}
 		return processInfo;
 	}

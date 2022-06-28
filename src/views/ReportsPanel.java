@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ReportsPanel extends JPanel {
 
-    private static final String[] COLUMNS = {"Nombre", "Tiempo", "Bloqueo"};
+    private static final String[] COLUMNS = {"Nombre", "Tiempo", "Bloqueo", "Suspendido listo", "Suspendido bloqueado"};
 
     public ReportsPanel(ArrayList<MyProcess> readyProcess, ArrayList<MyProcess> dispatchedProcess,
                         ArrayList<MyProcess> executingProcess, ArrayList<MyProcess> toLockedProcess,

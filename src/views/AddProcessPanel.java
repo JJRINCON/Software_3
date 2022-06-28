@@ -141,8 +141,8 @@ public class AddProcessPanel extends MyGridPanel{
         processNameTxt.setText(name);
         processTimeTxt.setText(time);
         isBlockedCb.setSelected(states[0]);
-        isSuspendedReadyCb.setSelected(states[1]);
-        isSuspendedBlockedCb.setSelected(states[2]);
+        isSuspendedBlockedCb.setSelected(states[1]);
+        isSuspendedReadyCb.setSelected(states[2]);
         addBtn.setName(name);
     }
 
