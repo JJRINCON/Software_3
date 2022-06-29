@@ -46,7 +46,7 @@ public class ReportsPanel extends JPanel {
         reports.add("De bloqueado a listo", lockedToReadyTable);
 
         TablePanel lockedToSuspendedLockedTable = new TablePanel(OperatingSystem.processInfo(lockedToSuspendedLocked), COLUMNS);
-        reports.add("De bloqueo a suspendido listo", lockedToSuspendedLockedTable);
+        reports.add("De bloqueo a suspendido bloqueado", lockedToSuspendedLockedTable);
 
         TablePanel suspendedLockedTable = new TablePanel(OperatingSystem.processInfo(suspendedLocked), COLUMNS);
         reports.add("Suspendidos bloqueados", suspendedLockedTable);
@@ -68,6 +68,9 @@ public class ReportsPanel extends JPanel {
 
         TablePanel expiredTable = new TablePanel(OperatingSystem.processInfo(expiredProcess), COLUMNS);
         reports.add("Tiempo expirado", expiredTable);
+
+        TablePanel readyToSuspendedReady = new TablePanel(OperatingSystem.processInfo(new ArrayList<MyProcess>()), COLUMNS);
+        reports.add("Listos a suspendido listo", readyToSuspendedReady);
 
         TablePanel terminatedTable = new TablePanel(OperatingSystem.processInfo(terminatedProcess), COLUMNS);
         reports.add("terminados", terminatedTable);
